@@ -1,0 +1,24 @@
+<launch>
+    <arg name="pause" default="false"/>
+	<arg name="gui" default="true"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="table" default="true"/>
+	<arg name="bhand" default="false"/>
+
+
+	<node name="twist_publisher" pkg="t1" exec="twist_publisher" args="wam_link_0 wam_link_7"/>
+
+    <node name="pose" pkg="t1" exec="jnt_cart" args="wam_link_0 wam_link_7"/>
+
+    <include file="$(find-pkg-share wam_bringup)/launch/gazebo.launch.xml" >
+		<arg name="pause" value="$(var pause)"/>
+		<arg name="gui" value="$(var gui)"/>
+		<arg name="use_sim_time" value="$(var use_sim_time)"/>
+		<arg name="table" value="$(var table)"/>
+		<arg name="bhand" value="$(var bhand)"/>
+	</include>
+
+	<executable cmd="python3 $(find-pkg-share t1)/scripts/pose_plotter.py --ros-args -p use_sim_time:=$(var use_sim_time)" output="screen"/>
+
+
+</launch>
