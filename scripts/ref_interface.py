@@ -41,6 +41,8 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
 
 FIELDS = ['x [m]', 'y [m]', 'z [m]', 'roll [°]', 'pitch [°]', 'yaw [°]']
+# Valores iniciais dos campos: x, y, z [m] e roll, pitch, yaw [°]
+DEFAULT_VALUES = [-0.082, 0.0, 0.4, 81.0, 0.0, 0.0]
 POS_LABELS = ['x', 'y', 'z']
 RPY_LABELS = ['roll', 'pitch', 'yaw']
 MAX_DRAW_POINTS = 2000   # pontos desenhados por curva (o resto e decimado)
@@ -211,7 +213,7 @@ def main():
     boxes = []
     for i, label in enumerate(FIELDS):
         ax = fig.add_axes([0.10, 0.86 - i * 0.06, 0.13, 0.04])
-        boxes.append(TextBox(ax, label + '  ', initial='0.0'))
+        boxes.append(TextBox(ax, label + '  ', initial=str(DEFAULT_VALUES[i])))
 
     btn_pub = Button(fig.add_axes([0.04, 0.44, 0.19, 0.05]), 'Publicar referência')
     btn_cur = Button(fig.add_axes([0.04, 0.37, 0.19, 0.05]), 'Usar pose atual')
