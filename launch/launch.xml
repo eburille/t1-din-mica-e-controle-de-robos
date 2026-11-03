@@ -10,6 +10,8 @@
 
     <node name="pose" pkg="t1" exec="jnt_cart" args="wam_link_0 wam_link_7"/>
 
+	<node name="gerador_trajetoria" pkg="t1" exec="gerador_trajetoria"/>
+
     <include file="$(find-pkg-share wam_bringup)/launch/gazebo.launch.xml" >
 		<arg name="pause" value="$(var pause)"/>
 		<arg name="gui" value="$(var gui)"/>
@@ -18,7 +20,9 @@
 		<arg name="bhand" value="$(var bhand)"/>
 	</include>
 
-	<executable cmd="python3 $(find-pkg-share t1)/scripts/pose_plotter.py --ros-args -p use_sim_time:=$(var use_sim_time)" output="screen"/>
+	<node name="controlador" pkg="t1" exec="controlador" />
+
+	<executable cmd="python3 $(find-pkg-share t1)/scripts/ref_interface.py --ros-args -p use_sim_time:=$(var use_sim_time)" output="screen"/>
 
 
 </launch>

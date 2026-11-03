@@ -66,6 +66,21 @@ target_link_libraries(
   ${orocos_kdl_TARGETS}
 )
 
+add_executable(controlador src/controlador.cpp)
+target_compile_features(controlador PUBLIC c_std_17 cxx_std_20)  # Require C17 and C++20
+target_link_libraries(
+  controlador
+  ${rclcpp_TARGETS}
+  ${geometry_msgs_TARGETS}
+  ${sensor_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${kdl_parser_TARGETS}
+  ${orocos_kdl_TARGETS}
+  ${tf2_kdl_TARGETS}
+  ${urdf_TARGETS}
+  ${trajectory_msgs_TARGETS}
+)
+
 install(DIRECTORY launch
 	DESTINATION share/${PROJECT_NAME}
 )
@@ -81,6 +96,9 @@ install(TARGETS gerador_trajetoria
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS twist_publisher
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS controlador
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
